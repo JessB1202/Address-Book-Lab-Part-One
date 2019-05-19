@@ -17,9 +17,9 @@ class AddressBook {
 
   deleteByName(name) {
     for (let i = 0; i < this.contacts.length; i++) {
-      for (let key in this.contacts[i].name) {
-        if (this.contacts[key][i] === name) {
-          deleteAt(i, 1);
+      for (let key in this.contacts[i]) {
+        if (this.contacts[i].name === name) {
+          this.contacts.splice(i, 1);
         }
       }
     }
@@ -37,35 +37,35 @@ class Contact {
 
 let contacts = new AddressBook ({});
 
-let answer = prompt ("Would you like to add, delete, print a contact, or quit?");
+let answer;
 
-if (answer === "add") {
-  let name = prompt ("Please enter the contact's name.");
-  let email = prompt ("Please enter the contact's email address.");
-  let phone = prompt ("Please enter the contact's phone number.");
-  let relation = prompt ("Please enter your relationship with the contact.")
-  let contact = new Contact (name, email, phone, relation);
-  contacts.add(contact);
-  }
-  else if (answer === "delete") {
+while (answer !== "quit") {
+
+  answer = prompt ("Would you like to add, delete, print a contact, or quit?");
+
+  if (answer === "add") {
+    let name = prompt ("Please enter the contact's name.");
+    let email = prompt ("Please enter the contact's email address.");
+    let phone = prompt ("Please enter the contact's phone number.");
+    let relation = prompt ("Please enter your relationship with the contact.")
+    let contact = new Contact (name, email, phone, relation);
+    contacts.add(contact);
+  } else if (answer === "delete") {
     let deleteOption = prompt ("How would you like to delete the contact? By number or by name?");
     if (deleteOption === "number") {
       let deleteNum = prompt ("Please enter the contact's place in the address book that you wish to delete.");
       let deleteIndex = deleteNum - 1;
       contacts.deleteAt(deleteIndex);
-    } 
-    else {
+      } else {
       let deleteName = prompt ("Please enter the name of the contact you wish to delete.");
       contacts.deleteByName(deleteName);
-      console.log(contacts);
-    }
-  }
-  else if (answer === "print") {
+      }
+  } else if (answer === "print") {
     contacts.print();
   }
-  else if (answer === "quit") {
-    alert ("Have a great day!");
-  }
-  else {
-    alert ("Invalid input, please refresh and try again.");
-  }
+}
+
+if (answer === "quit") {
+    alert ("Have a great day!"); 
+}
+  
